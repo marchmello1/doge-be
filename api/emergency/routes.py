@@ -39,7 +39,7 @@ async def get_emergency_services(
 
         response = get_general_info(state)
         
-        return response["data"]
+        return response
         
     except Exception as e:
         logging.error(e)
