@@ -8,23 +8,23 @@ def get_general_prompt(source_state: str, target_state: str) -> Callable[[], str
   "data": [
     {{
       "title": "Tax Rates",
-      "description": "Comparison of the tax rates between the states"
+      "description": "provide a sentence on Comparison of the tax rates between the states"
     }},
     {{
       "title": "Vehicle Registration",
-      "description": "Comparison of the vehicle registration process between the states"
+      "description": "provide a sentence on Comparison of the vehicle registration process between the states"
     }},
     {{
       "title": "Employment Laws",
-      "description": "Comparison of the employment laws between the states"
+      "description": "provide a sentence on Comparison of the employment laws between the states"
     }},
     {{
       "title": "Property Laws",
-      "description": "Comparison of the property laws between the states"
+      "description": "provide a sentence on Comparison of the property laws between the states"
     }},
     {{
       "title": "Education",
-      "description": "Comparison of the education system between the states"
+      "description": "provide a sentence on Comparison of the education system between the states"
     }}
   ]
 }}
