@@ -1,8 +1,9 @@
-from langchain_openai import OpenAI
+from langchain import PromptTemplate, LLMChain
+from langchain.llms import OpenAI
 import os
 import json
 from typing import Dict
-from api.dashboard.models import Response
+from api.dashboard.models import GeneralComparisonResponse
 from api.dashboard.prompts import get_general_prompt
 from env import env
 
@@ -23,23 +24,29 @@ def get_general_info(source_state: str, target_state: str, api_key: str) -> Dict
     os.environ["OPENAI_API_BASE"] = "https://api.x.ai/v1"
 
     llm = OpenAI(
-        model="grok-2-1212",
-        max_tokens=50000,
+        model_name="grok-2-1212",
+        max_tokens=2048,
         temperature=0.3,
     )
 
+    prompt = PromptTemplate(
+        template=get_general_prompt(source_state, target_state),
+        input_variables=[]
+    )
+
+    llm_chain = LLMChain(prompt=prompt, llm=llm)
+
     try:
-        prompt = get_general_prompt(source_state, target_state)
-        output = llm(prompt())
+        output = llm_chain.run()
         clean_output = output.strip().replace('\n', ' ').replace('\r', '').replace('<|eos|>', '')
         start_idx = clean_output.find('{')
         end_idx = clean_output.rfind('}') + 1
         json_str = clean_output[start_idx:end_idx]
         parsed_json = json.loads(json_str)
-        validated_data = Response.model_validate(parsed_json)
+        validated_data = GeneralComparisonResponse.parse_obj(parsed_json)
         return {
             "status": "success",
-            "data": json.loads(validated_data.model_dump_json())
+            "data": validated_data.dict()["data"]
         }
     except Exception as e:
         return {
