@@ -1,9 +1,10 @@
 from openai import OpenAI
 import base64
 from typing import Optional, Union
+from .prompts import SYSTEM_MESSAGES
 
 class RelocationBot:
-    def __init__(self, api_key: str, api_base: str = "https://api.x.ai/v1"):
+    def __init__(self, api_key: str, api_base: str = "https://api.x.ai/v1", system_message_type: str = 'detailed'):
         if not api_key:
             raise ValueError("API key is required")
             
@@ -11,9 +12,12 @@ class RelocationBot:
             api_key=api_key,
             base_url=api_base
         )
+        
+        # Get system message from prompts
+        system_message = SYSTEM_MESSAGES.get(system_message_type, SYSTEM_MESSAGES['default'])
         self.messages = [{
             "role": "system",
-            "content": "You are a helpful state relocation assistant specializing in providing comprehensive information about moving between U.S. states. Provide specific data with sources when possible. Focus on practical advice and important considerations."
+            "content": system_message
         }]
 
     def chat(self, message: str, image: Optional[Union[str, bytes]] = None, is_url: bool = False) -> str:
