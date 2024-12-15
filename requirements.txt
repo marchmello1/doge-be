@@ -16,3 +16,7 @@ pytest-cov
 openai
 langchain_xai
 chainlit
+SpeechRecognition
+PyPDF2
+python-docx
+PyAudio
