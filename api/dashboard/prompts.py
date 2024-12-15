@@ -1,11 +1,31 @@
 from typing import Callable, Dict
 
-def get_general_prompts(source_state: str, target_state: str) -> Dict[str, Callable[[], str]]:
-    """Get all general prompts with formatted state names"""
-    return {
-        "tax_rates": lambda: f"State tax rate variation between {source_state} and {target_state}.",
-        "vehicle_registration": lambda: f"Annual vs biennial vehicle registration between {source_state} and {target_state}.",
-        "employment_laws": lambda: f"{source_state} and {target_state} have different at-will employment policies.",
-        "property_laws": lambda: f"{source_state} and {target_state} have different homestead exemptions.",
-        "education": lambda: f"{source_state} and {target_state} have different school district regulations."
-    }
+def get_general_prompt(source_state: str, target_state: str) -> Callable[[], str]:
+    """Get a general prompt that compares the states"""
+    return lambda: f"""Return a JSON object that compares the following general information between {source_state} and {target_state}:
+
+{{
+  "data": [
+    {{
+      "title": "Tax Rates",
+      "description": "Comparison of the tax rates between the states"
+    }},
+    {{
+      "title": "Vehicle Registration",
+      "description": "Comparison of the vehicle registration process between the states"
+    }},
+    {{
+      "title": "Employment Laws",
+      "description": "Comparison of the employment laws between the states"
+    }},
+    {{
+      "title": "Property Laws",
+      "description": "Comparison of the property laws between the states"
+    }},
+    {{
+      "title": "Education",
+      "description": "Comparison of the education system between the states"
+    }}
+  ]
+}}
+"""
