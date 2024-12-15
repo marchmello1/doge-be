@@ -16,13 +16,10 @@ class RelocationBot:
             base_url=api_base
         )
         
-        
-        system_message = SYSTEM_MESSAGES.get(system_message_type, SYSTEM_MESSAGES['default'])
         self.messages = [{
             "role": "system",
-            "content": system_message
+            "content": SYSTEM_MESSAGES
         }]
-        
         
         self.recognizer = sr.Recognizer()
 
