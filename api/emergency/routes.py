@@ -5,8 +5,9 @@ from langchain_openai import OpenAI
 import logging
 import os
 import json
+from api.emergency.methods import get_general_info
 from .models import EmergencyServiceResponse, EmergencyComparison
-from .prompts import get_emergency_services_prompt, get_emergency_comparison_prompt
+from .prompts import get_emergency_services_prompt
 from env import env
 
 router = APIRouter(prefix="/api/v1/emergency", tags=["emergency"])
@@ -36,18 +37,9 @@ async def get_emergency_services(
     try:
         api_key=env.XAI_KEY
 
-        llm = get_llm(api_key)
+        response = get_general_info(state)
         
-        prompt = get_emergency_services_prompt(state)
-        response = llm(prompt)
-        
-        # Clean and parse response
-        clean_response = response.strip().replace('\n', ' ').replace('\r', '')
-        data = json.loads(clean_response)
-        
-        logging.info(data)
-
-        return data
+        return response["data"]
         
     except Exception as e:
         logging.error(e)
