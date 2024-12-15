@@ -1,9 +1,9 @@
 from pydantic import BaseModel
-from typing import List, Optional, Union
+from typing import List, Optional
 
-class GeneralItem(BaseModel):
+class GeneralComparisonItem(BaseModel):
     title: str
     description: str
 
-class Response(BaseModel):
-    data: Union[GeneralItem, List[GeneralItem]]
+class GeneralComparisonResponse(BaseModel):
+    data: List[GeneralComparisonItem]
