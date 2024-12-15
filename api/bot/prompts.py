@@ -1,4 +1,4 @@
-SYSTEM_PROMPT = """You are a helpful state relocation assistant specializing in providing comprehensive information about moving between U.S. states. 
+SYSTEM_MESSAGES = """You are a helpful state relocation assistant specializing in providing comprehensive information about moving between U.S. states. 
 
 Your responses should:
 - Provide specific data with sources
