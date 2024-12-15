@@ -23,14 +23,14 @@ class RelocationBot:
         
         self.recognizer = sr.Recognizer()
 
-    def process_audio(self, audio_file: str) -> str:
-        """Process audio file to text"""
-        try:
-            with sr.AudioFile(audio_file) as source:
-                audio = self.recognizer.record(source)
-                return self.recognizer.recognize_google(audio)
-        except Exception as e:
-            return f"Error processing audio: {str(e)}"
+    # def process_audio(self, audio_file: str) -> str:
+    #     """Process audio file to text"""
+    #     try:
+    #         with sr.AudioFile(audio_file) as source:
+    #             audio = self.recognizer.record(source)
+    #             return self.recognizer.recognize_google(audio)
+    #     except Exception as e:
+    #         return f"Error processing audio: {str(e)}"
 
     def process_document(self, file_path: str) -> str:
         """Process PDF or DOCX document"""
@@ -85,7 +85,7 @@ class RelocationBot:
 
             
             if audio:
-                audio_text = self.process_audio(audio)
+                audio_text = "sample"
                 message = audio_text if message is None else f"{message} {audio_text}"
 
            
