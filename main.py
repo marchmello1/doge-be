@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client import Gauge, Counter, generate_latest
 from api.compare import routes as compare_router
+from api.dashboard import routes as dashboard_router
 from env import env
 
 uptime_gauge = Gauge(
@@ -45,6 +46,7 @@ setup_error_handlers(app)
 
 # Include all the routes
 app.include_router(compare_router.router)
+app.include_router(dashboard_router.router)
 
 
 # Set up logging

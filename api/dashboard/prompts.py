@@ -2,7 +2,7 @@ from typing import Callable, Dict
 
 def get_general_prompt(source_state: str, target_state: str) -> Callable[[], str]:
     """Get a general prompt that compares the states"""
-    return lambda: f"""Return a JSON object that compares the following general information between {source_state} and {target_state}. The descriptions should be 1-2 small sentences summarizing the key differences:
+    return lambda: f"""Return a JSON object that compares the following general information between {source_state} and {target_state}. The descriptions should be a single strictly summarizing the key differences within 20 words, it should be a kind of short summary !:
 
 {{
   "data": [
