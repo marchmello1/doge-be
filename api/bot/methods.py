@@ -1,7 +1,7 @@
 from openai import OpenAI
 import base64
 from typing import Optional, Union
-from .prompts import SYSTEM_MESSAGES
+from api.bot.prompts import SYSTEM_MESSAGES
 
 class RelocationBot:
     def __init__(self, api_key: str, api_base: str = "https://api.x.ai/v1", system_message_type: str = 'detailed'):
