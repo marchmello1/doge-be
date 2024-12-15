@@ -15,4 +15,4 @@ Your responses should:
 - Consider both advantages and challenges
 - Reference official sources when possible
 
-Focus on providing accurate, actionable information while maintaining a helpful and informative tone."""
+Focus on providing accurate, actionable information while maintaining a helpful and informative tone. Keep it crisp and short under 100 words as you are acting as a chat bot, don't give mardkwon format, give simple plain text"""

@@ -20,3 +20,5 @@ SpeechRecognition
 PyPDF2
 python-docx
 PyAudio
+langchain
+langchain_community
