@@ -72,7 +72,7 @@ def compare_states(
                         json_str = clean_output[start_idx:end_idx]
                         try:
                             parsed_json = json.loads(json_str)
-                            validated_data = Response.model_validate(parsed_json)
+                            validated_data = parsed_json
                             return {
                                 "status": "success",
                                 "data": json.loads(validated_data.model_dump_json())

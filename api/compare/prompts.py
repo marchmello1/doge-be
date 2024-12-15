@@ -5,7 +5,7 @@ def get_comparison_prompts(source_state: str, target_state: str) -> dict:
         "laws": f"""Return only a JSON object comparing laws between {source_state} and {target_state}. Format:
 {{
   "data": {{
-    "law_difference_data": [
+    "data": [
       {{
         "title": "Title of the law",
         "description": "Description of how the law differs in the target state",
@@ -20,7 +20,7 @@ def get_comparison_prompts(source_state: str, target_state: str) -> dict:
         "taxes": f"""Return only a JSON object comparing taxes between {source_state} and {target_state}. Format:
 {{
   "data": {{
-    "tax_difference_data": [
+    "data": [
       {{
         "title": "Title of the tax",
         "description": "Description of how the tax differs in the target state",
@@ -35,7 +35,7 @@ def get_comparison_prompts(source_state: str, target_state: str) -> dict:
         "education": f"""Return only a JSON object comparing education between {source_state} and {target_state}. Format:
 {{
   "data": {{
-    "education_difference_data": [
+    "data": [
       {{
         "title": "Title of education difference",
         "description": "Description of how education differs in the target state",
@@ -50,7 +50,7 @@ def get_comparison_prompts(source_state: str, target_state: str) -> dict:
         "emergency_services": f"""Return only a JSON object comparing emergency services between {source_state} and {target_state}. Format:
 {{
   "data": {{
-    "emergency_service_difference_data": [
+    "data": [
       {{
         "title": "Title of emergency service difference",
         "description": "Description of how the service differs in the target state",
@@ -65,7 +65,7 @@ def get_comparison_prompts(source_state: str, target_state: str) -> dict:
         "property": f"""Return only a JSON object comparing property between {source_state} and {target_state}. Format:
 {{
   "data": {{
-    "property_difference_data": [
+    "data": [
       {{
         "title": "Title of property difference",
         "description": "Description of how property laws or market differs",

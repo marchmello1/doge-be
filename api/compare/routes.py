@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 from api.compare.methods import compare_states  # Assuming the compare_states function is in compare.py
 from api.compare.models import Response
 from env import env
+import logging
 
 router = APIRouter(
     prefix="/api/v1/states",
@@ -34,6 +35,8 @@ async def compare_states_endpoint(request: ComparisonRequest):
             comparison_type=request.comparison_type,
             api_key=env.XAI_KEY
         )
+
+        logging.info(request)
         
         if result["status"] == "error":
             raise HTTPException(
@@ -43,10 +46,11 @@ async def compare_states_endpoint(request: ComparisonRequest):
                     "raw_response": result.get("raw_response")
                 }
             )
-            
+        logging.info(result["data"])
         return result["data"]
         
     except Exception as e:
+        logging.error(e)
         return JSONResponse(
             status_code=500,
             content={
