@@ -1,6 +1,9 @@
 from openai import OpenAI
 import base64
 from typing import Optional, Union
+import speech_recognition as sr
+import PyPDF2
+import docx
 from api.bot.prompts import SYSTEM_MESSAGES
 
 class RelocationBot:
@@ -13,16 +16,60 @@ class RelocationBot:
             base_url=api_base
         )
         
-        # Get system message from prompts
+        
         system_message = SYSTEM_MESSAGES.get(system_message_type, SYSTEM_MESSAGES['default'])
         self.messages = [{
             "role": "system",
             "content": system_message
         }]
+        
+        
+        self.recognizer = sr.Recognizer()
 
-    def chat(self, message: str, image: Optional[Union[str, bytes]] = None, is_url: bool = False) -> str:
+    def process_audio(self, audio_file: str) -> str:
+        """Process audio file to text"""
+        try:
+            with sr.AudioFile(audio_file) as source:
+                audio = self.recognizer.record(source)
+                return self.recognizer.recognize_google(audio)
+        except Exception as e:
+            return f"Error processing audio: {str(e)}"
+
+    def process_document(self, file_path: str) -> str:
+        """Process PDF or DOCX document"""
+        try:
+            if file_path.lower().endswith('.pdf'):
+                return self._read_pdf(file_path)
+            elif file_path.lower().endswith('.docx'):
+                return self._read_docx(file_path)
+            else:
+                return "Unsupported document format"
+        except Exception as e:
+            return f"Error processing document: {str(e)}"
+
+    def _read_pdf(self, file_path: str) -> str:
+        """Extract text from PDF"""
+        text = ""
+        with open(file_path, 'rb') as file:
+            reader = PyPDF2.PdfReader(file)
+            for page in reader.pages:
+                text += page.extract_text() + "\n"
+        return text
+
+    def _read_docx(self, file_path: str) -> str:
+        """Extract text from DOCX"""
+        doc = docx.Document(file_path)
+        return "\n".join([paragraph.text for paragraph in doc.paragraphs])
+
+    def chat(self, 
+             message: Optional[str] = None, 
+             image: Optional[Union[str, bytes]] = None, 
+             audio: Optional[str] = None,
+             document: Optional[str] = None,
+             is_url: bool = False) -> str:
         try:
             content = []
+            
             
             if image:
                 if is_url:
@@ -38,11 +85,23 @@ class RelocationBot:
                         "detail": "high"
                     }
                 })
+
             
-            content.append({
-                "type": "text",
-                "text": message
-            })
+            if audio:
+                audio_text = self.process_audio(audio)
+                message = audio_text if message is None else f"{message} {audio_text}"
+
+           
+            if document:
+                doc_text = self.process_document(document)
+                message = doc_text if message is None else f"{message}\n\nDocument content: {doc_text}"
+            
+          
+            if message:
+                content.append({
+                    "type": "text",
+                    "text": message
+                })
 
             self.messages.append({
                 "role": "user",
