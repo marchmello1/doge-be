@@ -12,6 +12,7 @@ from prometheus_client import Gauge, Counter, generate_latest
 from api.compare import routes as compare_router
 from api.dashboard import routes as dashboard_router
 from api.bot import routes as bot_router
+from api.emergency import routes as emergency_router
 from env import env
 
 uptime_gauge = Gauge(
@@ -49,6 +50,7 @@ setup_error_handlers(app)
 app.include_router(compare_router.router)
 app.include_router(dashboard_router.router)
 app.include_router(bot_router.router)
+app.include_router(emergency_router.router)
 
 
 # Set up logging
