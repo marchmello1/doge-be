@@ -36,21 +36,24 @@ def get_general_info(source_state: str, target_state: str, api_key: str) -> Dict
             temperature=0.3,
         )
         
-       
+        
+        formatted_prompt = get_general_prompt(source_state, target_state)
+        
+     
         prompt = PromptTemplate(
-            template=get_general_prompt(source_state, target_state),
-            input_variables=["dummy"]
+            template=formatted_prompt,
+            input_variables=[] 
         )
         
         llm_chain = LLMChain(prompt=prompt, llm=llm)
         
-        
-        output = llm_chain.run(dummy="")
+       
+        output = llm_chain.run({})
         
         
         clean_output = output.strip().replace('\n', ' ').replace('\r', '').replace('<|eos|>', '')
         
-        
+       
         start_idx = clean_output.find('{')
         end_idx = clean_output.rfind('}') + 1
         
