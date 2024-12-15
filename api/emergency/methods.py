@@ -4,7 +4,7 @@ import json
 from typing import Dict
 from env import env
 
-def get_general_info(state:str) -> Dict:
+def get_general_info(state:str):
     """
     Get general information comparing aspects between states
     """

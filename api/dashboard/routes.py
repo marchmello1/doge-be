@@ -37,6 +37,7 @@ async def dashboard_endpoint(request: ComparisonRequest):
 
                 }
             )
+        
         logging.info(result["data"])
         return result["data"]
         
